@@ -8,7 +8,7 @@ public class PaceBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PaceBackendApplication.class, args);
-		//comment hello command
+		//comment hello command as
 	}
 
 }
