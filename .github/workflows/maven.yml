@@ -21,8 +21,9 @@ jobs:
     - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        root password: Sub@2019
-        superuser: root
+        mysql root password: Sub@2019
+        mysql user: root
+        mysql password: Sub@2019
         host port: 3000
         mysql database: 'pace'
     - uses: actions/checkout@v3
