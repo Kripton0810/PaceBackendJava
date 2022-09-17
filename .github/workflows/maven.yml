@@ -35,3 +35,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Build Artifcat file
+      uses: actions/upload-artifact@v2
+      with:
+        name: github-artifact-v2
+        path: artifact
