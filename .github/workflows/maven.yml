@@ -8,12 +8,26 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+env:
+  MYSQL_DB: pace
+  MYSQL_USER: root
+  MYSQL_PASSWORD: Sub@2019
+  MYSQL_HOST: mysql-master
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    services:
+      mysql-master:
+        image: mysql:5.7
+        ports:
+          - 3000/tcp
+        env:                  
+          MYSQL_DB: pace
+          MYSQL_USER: root
+          MYSQL_PASSWORD: Sub@2019
+          MYSQL_HOST: mysql-master
+                   
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -23,4 +37,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean install
+      run: mvn -B package --file pom.xml
