@@ -1,5 +1,6 @@
 package com.paceclasses.model;
 
+import java.security.SecureRandom;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,21 +11,24 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 public class Users {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@Column(nullable = true)
+	
 	private String name;
-	@Column(length = 500,nullable = true)
+	@Column(length = 500)
 	private String password;
-	@Column(nullable = true)
+	@Column(unique = true,nullable = false)
+	
 	private String email;
-	@Column(nullable = true)
+	
 	private String phone;
-	@Column(nullable = true)
+	
 	private String pic_url;
 	@CreationTimestamp
 	private Date created_at;
@@ -33,6 +37,7 @@ public class Users {
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -40,13 +45,16 @@ public class Users {
 		return name;
 	}
 	public void setName(String name) {
+		System.out.println(name);
 		this.name = name;
 	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+//		PasswordEncoder
+		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+		this.password = enc.encode(password);
 	}
 	public String getEmail() {
 		return email;
@@ -83,6 +91,5 @@ public class Users {
 		return "Users [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", phone=" + phone
 				+ ", pic_url=" + pic_url + ", created_at=" + created_at + ", updated_at=" + updated_at + "]";
 	}
-	
 	
 }

@@ -1,5 +1,6 @@
 package com.paceclasses.service;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paceclasses.model.Users;
@@ -33,6 +35,7 @@ public class UsersService{
 	}
 	public Users saveOrUpdate(Users user)
 	{
+//		System.out.println(user.toString());
 		return repo.save(user);
 	}
 	public void deleteById(long id)
@@ -43,5 +46,19 @@ public class UsersService{
 	{
 		return repo.save(user);
 	}
-
+	public Users findByEmail(String email)
+	{
+		Users user = null;
+		List<Users> list = new ArrayList<>();
+		repo.findAll().forEach(item->list.add(item));
+		user = list.stream().filter(filterUser->filterUser.getEmail().equalsIgnoreCase(email)).findFirst().orElse(null);
+		return user;
+	}
+	public boolean isPassword(String hash,String password)
+	{
+		boolean isEqual = false;
+		BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+		isEqual = pass.matches(password, hash);
+		return isEqual;
+	}
 }
