@@ -13,6 +13,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 public class Users {
@@ -57,10 +59,10 @@ public class Users {
 	}
 
 	public void setPassword(String password) {
-		// PasswordEncoder
-		// BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
-		// this.password = enc.encode(password);
-		this.password = password;
+		int strength = 10;
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(strength, new SecureRandom());
+		this.password = passwordEncoder.encode(password);
+		// this.password = password;
 	}
 
 	public String getEmail() {

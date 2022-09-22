@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +58,9 @@ public class UsersService {
 
 	public boolean isPassword(String hash, String password) {
 		boolean isEqual = false;
-		// BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
-		// isEqual = pass.matches(password, hash);
+		int strength = 10;
+		BCryptPasswordEncoder pass = new BCryptPasswordEncoder(strength, new SecureRandom());
+		isEqual = pass.matches(password, hash);
 		return isEqual;
 	}
 }
