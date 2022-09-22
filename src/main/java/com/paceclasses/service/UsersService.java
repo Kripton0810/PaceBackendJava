@@ -12,53 +12,53 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paceclasses.model.Users;
 import com.paceclasses.repository.UserRepository;
 
 @Service
-public class UsersService{
+public class UsersService {
 	@Autowired
 	UserRepository repo;
-	
-	public List<Users> getAllUsers()
-	{
+
+	public List<Users> getAllUsers() {
 		List<Users> list = new ArrayList<>();
-		repo.findAll().forEach(item->list.add(item));
+		repo.findAll().forEach(item -> list.add(item));
 		return list;
 	}
-	public Users getUserById(long id)
-	{
+
+	public Users getUserById(long id) {
 		return repo.findById(id).get();
 	}
-	public Users saveOrUpdate(Users user)
-	{
-//		System.out.println(user.toString());
+
+	public Users saveOrUpdate(Users user) {
+		// System.out.println(user.toString());
 		return repo.save(user);
 	}
-	public void deleteById(long id)
-	{
+
+	public void deleteById(long id) {
 		repo.deleteById(id);
 	}
-	public Users update(Users user,long id)
-	{
+
+	public Users update(Users user, long id) {
 		return repo.save(user);
 	}
-	public Users findByEmail(String email)
-	{
+
+	public Users findByEmail(String email) {
 		Users user = null;
 		List<Users> list = new ArrayList<>();
-		repo.findAll().forEach(item->list.add(item));
-		user = list.stream().filter(filterUser->filterUser.getEmail().equalsIgnoreCase(email)).findFirst().orElse(null);
+		repo.findAll().forEach(item -> list.add(item));
+		user = list.stream().filter(filterUser -> filterUser.getEmail().equalsIgnoreCase(email)).findFirst()
+				.orElse(null);
 		return user;
 	}
-	public boolean isPassword(String hash,String password)
-	{
+
+	public boolean isPassword(String hash, String password) {
 		boolean isEqual = false;
-		BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
-		isEqual = pass.matches(password, hash);
+		// BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+		// isEqual = pass.matches(password, hash);
 		return isEqual;
 	}
 }
